@@ -1,5 +1,5 @@
 # MicroService-converter
-##A REST interface created with Spring Boot.##
+A REST interface created with Spring Boot.
 
 ##Libs used in this project:##
 Apache POI(for reading xslx files)
