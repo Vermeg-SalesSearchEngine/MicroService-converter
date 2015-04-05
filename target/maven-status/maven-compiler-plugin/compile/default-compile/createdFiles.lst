@@ -1,0 +1,5 @@
+com\vermeg\convertisseur\service\ConvServiceImpl.class
+com\vermeg\convertisseur\service\ConvService.class
+com\vermeg\convertisseur\rest\ConvertController.class
+com\vermeg\convertisseur\rest\CorsFilter.class
+com\vermeg\convertisseur\App.class
