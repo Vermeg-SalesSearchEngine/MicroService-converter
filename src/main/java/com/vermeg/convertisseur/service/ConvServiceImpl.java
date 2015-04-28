@@ -19,6 +19,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -82,15 +83,28 @@ Sheet sheet=workbook.getSheet(name);
         for ( Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); )
         {
             Cell cell = cellsIT.next();
-           
-            if (cell.getCellType()==CELL_TYPE_NUMERIC)
-            {
-              if (HSSFDateUtil.isCellDateFormatted(cell)) {
-        cells.put(cell.getDateCellValue());}
-            else
-                  cells.put(cell.getNumericCellValue());}
-            else
-            cells.put( cell.getStringCellValue() );
+          // System.out.println(cell.getCellType());
+//           cells.put(cell.getDateCellValue());
+           switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_STRING:
+                    cells.put(cell.getRichStringCellValue().getString());
+                    break;
+                case Cell.CELL_TYPE_NUMERIC:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        cells.put(cell.getDateCellValue());
+                    } else {
+                        cells.put(cell.getNumericCellValue());
+                    }
+                    break;
+                case Cell.CELL_TYPE_BOOLEAN:
+                    cells.put(cell.getBooleanCellValue());
+                    break;
+                case Cell.CELL_TYPE_FORMULA:
+                    cells.put(cell.getCellFormula());
+                    break;
+                default:
+                    System.out.println();
+            }
         }
         jRow.put( "cell", cells );
         rows.put(cells);
